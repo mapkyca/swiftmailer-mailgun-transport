@@ -38,13 +38,12 @@ class MailgunTransport implements Swift_Transport
     private $logger;
 
     /**
-     * @param \Swift_Events_EventDispatcher $eventDispatcher
      * @param Mailgun                       $mailgun
      * @param $domain
      * @param LoggerInterface $logger
      */
     public function __construct(
-        \Swift_Events_EventDispatcher $eventDispatcher,
+        //\Swift_Events_EventDispatcher $eventDispatcher,
         Mailgun $mailgun,
         $domain,
         LoggerInterface $logger
@@ -104,12 +103,12 @@ class MailgunTransport implements Swift_Transport
     {
         $failedRecipients = (array) $failedRecipients;
 
-        if ($evt = $this->eventDispatcher->createSendEvent($this, $message)) {
-            $this->eventDispatcher->dispatchEvent($evt, 'beforeSendPerformed');
-            if ($evt->bubbleCancelled()) {
-                return 0;
-            }
-        }
+//        if ($evt = $this->eventDispatcher->createSendEvent($this, $message)) {
+//            $this->eventDispatcher->dispatchEvent($evt, 'beforeSendPerformed');
+//            if ($evt->bubbleCancelled()) {
+//                return 0;
+//            }
+//        }
 
         if (null === $message->getHeaders()->get('To')) {
             throw new \Swift_TransportException('Cannot send message without a recipient');
@@ -136,11 +135,11 @@ class MailgunTransport implements Swift_Transport
             $this->logger->error($e->getMessage(), $context);
         }
 
-        if ($evt) {
-            $evt->setResult($resultStatus);
-            $evt->setFailedRecipients($failedRecipients);
-            $this->eventDispatcher->dispatchEvent($evt, 'sendPerformed');
-        }
+//        if ($evt) {
+//            $evt->setResult($resultStatus);
+//            $evt->setFailedRecipients($failedRecipients);
+//            $this->eventDispatcher->dispatchEvent($evt, 'sendPerformed');
+//        }
 
         return $sent;
     }
@@ -150,10 +149,10 @@ class MailgunTransport implements Swift_Transport
      *
      * @param Swift_Events_EventListener $plugin
      */
-    public function registerPlugin(Swift_Events_EventListener $plugin)
-    {
-        $this->eventDispatcher->bindEventListener($plugin);
-    }
+//    public function registerPlugin(Swift_Events_EventListener $plugin)
+//    {
+//        $this->eventDispatcher->bindEventListener($plugin);
+//    }
 
     /**
      * Looks at the message headers to find post data.
