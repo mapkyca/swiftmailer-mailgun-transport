@@ -1,4 +1,4 @@
-** THIS IS A FORK of the Mailgun bundle, produced due to a work time pressure to get the Mailgun transport working. You should probably use the original project **
+**THIS IS A FORK of the Mailgun bundle, produced due to a work time pressure to get the Mailgun transport working with modern symfony builds. You should probably use the original project**
 
 # Swiftmailer Mailgun bundle
 
