@@ -36,6 +36,12 @@ class MailgunTransport implements Swift_Transport
      * @var LoggerInterface $logger
      */
     private $logger;
+    
+    /**
+     * Extension to capture the API response
+     * @var type 
+     */
+    private $lastAPIResponse = null;
 
     /**
      * @param Mailgun                       $mailgun
@@ -85,6 +91,11 @@ class MailgunTransport implements Swift_Transport
     public function stop()
     {
     }
+    
+    public function getLastAPIResponse() 
+    {
+        return $this->lastAPIResponse;
+    }
 
     /**
      * Send the given Message.
@@ -118,7 +129,7 @@ class MailgunTransport implements Swift_Transport
         $domain = $this->getDomain($message);
         $sent = count($postData['to']);
         try {
-            $this->mailgun->messages()->sendMime($domain, $postData['to'], $message->toString(), $postData);
+            $this->lastAPIResponse = $this->mailgun->messages()->sendMime($domain, $postData['to'], $message->toString(), $postData);
             $resultStatus = Swift_Events_SendEvent::RESULT_SUCCESS;
         } catch (\Exception $e) {
             $failedRecipients = $postData['to'];
